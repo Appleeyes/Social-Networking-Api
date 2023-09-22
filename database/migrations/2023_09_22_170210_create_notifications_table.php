@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id'); 
+            $table->string('type');
+            $table->unsignedBigInteger('notifiable_id');
+            $table->string('notifiable_type');
+            $table->timestamp('read_at')->nullable();
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->index(['notifiable_id', 'notifiable_type']);
         });
     }
 
