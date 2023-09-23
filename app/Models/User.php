@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Posts;
+use App\Models\Comments;
+use App\Models\Likes;
+use App\Models\Follows;
+use App\Models\Notifications;
+
+
+
 
 class User extends Authenticatable
 {
@@ -42,4 +50,35 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function posts()
+    {
+        return $this->hasMany(Posts::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Likes::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comments::class);
+    }
+
+    public function notifations()
+    {
+        return $this->hasMany(Notifications::class);
+    }
+
+    public function followers()
+    {
+        return $this->hasMany(Follows::class, 'following_id');
+    }
+
+    public function following()
+    {
+        return $this->hasMany(Follows::class, 'follower_id');
+    }
+
 }
